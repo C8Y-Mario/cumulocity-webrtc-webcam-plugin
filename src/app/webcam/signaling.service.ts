@@ -1,6 +1,12 @@
 import { Observable, Subscriber, TeardownLogic, Subscription } from 'rxjs';
 import { webSocket } from 'rxjs/webSocket';
 
+/***
+ * This creates a two-way communication channel for WebRTC signaling based on SDP. 
+ * It acts as a bridge between the browser and a webcam server, tunneled through Cumulocity's Remote Access proxy.
+ * Because the tunnel is a binary websocket connection itself, we have to create the Signaling Websocket manually:
+ * it first establishes the websocket connection and then sending/receiving text frames will encode/decode to/from binary
+ */
 export class TwoWayObservable<T = string> extends Observable<T> {
   constructor(
     subscribe: (subscriber: Subscriber<T>) => TeardownLogic,

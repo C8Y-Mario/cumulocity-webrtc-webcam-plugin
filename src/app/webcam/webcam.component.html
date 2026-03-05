@@ -16,12 +16,21 @@
   </button>
 </c8y-action-bar-item>
 
-<div class="content-fullpage d-flex a-i-center j-c-center">
-  <video
-    style="height: 100%; width: 100%"
-    [srcObject]="mediaStream$ | async"
-    autoplay
-    playsinline
-    #remoteVideo
-  ></video>
-</div>
+
+@if (mediaStream$) {
+  <div class="content-fullpage d-flex a-i-center j-c-center">
+    <video
+      style="height: 100%; width: 100%"
+      [srcObject]="mediaStream$ | async"
+      autoplay
+      playsinline
+      #remoteVideo
+    ></video>
+  </div>
+  @if (connecting) {
+    <c8y-loading [layout]="'page'" aria-label="Reconnecting"></c8y-loading>
+  }
+}
+@else {
+  <c8y-ui-empty-state [title]="'Click Play to Connect'"></c8y-ui-empty-state>
+}
